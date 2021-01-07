@@ -502,21 +502,10 @@ Otherwise return nil."
 
 (defun sr-speedbar-get-window ()
   "Get `sr-speedbar' window."
-  (let ((current-window (selected-window))
-        ;; Get split new window.
-        (new-window (split-window
-                     (selected-window)
-                     (if sr-speedbar-right-side
-                         (- (sr-speedbar-current-window-take-width) sr-speedbar-width)
-                       sr-speedbar-width)
-                     t)))
-    ;; Select split window.
-    (setq sr-speedbar-window
-          (if sr-speedbar-right-side
-              ;; Select right window when `sr-speedbar-right-side' is enable.
-              new-window
-            ;; Otherwise select left widnow.
-            current-window))))
+  (setq sr-speedbar-window
+        (split-window (selected-window)
+                      (- sr-speedbar-width)
+                      (if sr-speedbar-right-side 'right 'left))))
 
 (defun sr-speedbar-before-visiting-file-hook ()
   "Function that hook `speedbar-before-visiting-file-hook'."
